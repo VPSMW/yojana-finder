@@ -219,31 +219,214 @@
     white-space:nowrap;
     cursor:pointer;
   }
-  .tabs{
-    display:flex;
-    gap:8px;
-    margin-bottom:16px;
+  body{
+    padding-bottom:78px;
   }
-  .tab{
+  .bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#fff;
+    border-top:1px solid var(--line);
+    display:flex;
+    box-shadow:0 -2px 12px rgba(28,37,65,0.08);
+    z-index:100;
+    max-width:480px;
+    margin:0 auto;
+  }
+  .nav-item{
     flex:1;
     text-align:center;
-    padding:10px;
-    border-radius:9px;
-    font-size:13.5px;
-    font-weight:600;
-    background:#fff;
-    border:1.5px solid var(--line);
-    color:#777;
+    padding:9px 4px 8px;
     cursor:pointer;
+    color:#9A9A9A;
+    font-size:11px;
+    font-weight:600;
+    border-top:2.5px solid transparent;
   }
-  .tab.active{
+  .nav-item .nav-icon{
+    font-size:21px;
+    display:block;
+    margin-bottom:2px;
+  }
+  .nav-item.active{
+    color:var(--indigo);
+    border-top:2.5px solid var(--saffron);
+  }
+  .home-banner{
     background:var(--indigo);
     color:#fff;
-    border-color:var(--indigo);
+    border-radius:14px;
+    padding:22px 18px;
+    margin-bottom:18px;
+  }
+  .home-banner h2{
+    font-family:'Baloo 2', sans-serif;
+    font-size:21px;
+    margin-bottom:4px;
+  }
+  .home-banner p{
+    font-size:13.5px;
+    color:#C9CFE0;
+  }
+  .stat-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .stat-box{
+    flex:1;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    text-align:center;
+  }
+  .stat-box .num{
+    font-family:'Baloo 2', sans-serif;
+    font-size:24px;
+    color:var(--saffron);
+    font-weight:700;
+  }
+  .stat-box .lbl{
+    font-size:11.5px;
+    color:#888;
+    margin-top:2px;
+  }
+  .home-action{
+    display:block;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:12px;
+    cursor:pointer;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--indigo);
+  }
+  .home-action span.arrow{
+    float:right;
+    color:#aaa;
+  }
+  .profile-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:20px;
+    text-align:center;
+    margin-bottom:18px;
+  }
+  .profile-avatar{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    background:var(--saffron);
+    color:#fff;
+    font-size:26px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 12px;
+    font-family:'Baloo 2', sans-serif;
+  }
+  .profile-card h3{
+    font-family:'Baloo 2', sans-serif;
+    color:var(--indigo);
+    font-size:18px;
+    margin-bottom:4px;
+  }
+  .profile-card p{
+    font-size:13px;
+    color:#888;
   }
   footer a{
     color:#888;
     text-decoration:underline;
+  }
+  .premium-hero{
+    background:linear-gradient(135deg, var(--indigo), #2C3A5E);
+    color:#fff;
+    border-radius:14px;
+    padding:24px 18px;
+    text-align:center;
+    margin-bottom:18px;
+  }
+  .premium-hero h2{
+    font-family:'Baloo 2', sans-serif;
+    font-size:22px;
+    margin-bottom:6px;
+  }
+  .premium-hero p{
+    font-size:13.5px;
+    color:#C9CFE0;
+  }
+  .perk-list{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:6px 16px;
+    margin-bottom:18px;
+  }
+  .perk-list .perk{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .perk-list .perk:last-child{ border-bottom:none; }
+  .perk .tick{
+    color:var(--green);
+    font-weight:700;
+    font-size:16px;
+  }
+  .btn-premium{
+    width:100%;
+    padding:14px;
+    background:var(--saffron);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:700;
+    font-family:'Hind', sans-serif;
+    cursor:pointer;
+    margin-bottom:10px;
+  }
+  .unlock-row{
+    display:flex;
+    gap:8px;
+    margin-top:14px;
+  }
+  .unlock-row input{
+    flex:1;
+    padding:10px 12px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    font-size:14px;
+  }
+  .unlock-row button{
+    padding:10px 16px;
+    border-radius:8px;
+    border:none;
+    background:var(--indigo);
+    color:#fff;
+    font-weight:600;
+    font-size:13.5px;
+  }
+  .unlocked-banner{
+    background:#E9F5EC;
+    border:1.5px solid var(--green);
+    color:var(--green);
+    border-radius:10px;
+    padding:14px;
+    text-align:center;
+    font-weight:600;
+    margin-bottom:16px;
   }
   .empty-state{
     text-align:center;
@@ -277,12 +460,11 @@
     <button onclick="installApp()">इंस्टॉल करें</button>
   </div>
 
-  <div class="tabs">
-    <div class="tab active" id="tabSearch" onclick="switchTab('search')">योजना खोजें</div>
-    <div class="tab" id="tabSaved" onclick="switchTab('saved')">सेव की हुई</div>
+  <div id="homeSection">
+    <div id="homeArea"></div>
   </div>
 
-  <div id="searchSection">
+  <div id="searchSection" style="display:none;">
   <div class="filter-card">
     <h2>अपना विवरण दें</h2>
 
@@ -329,9 +511,28 @@
     <div id="savedArea"></div>
   </div>
 
+  <div id="profileSection" style="display:none;">
+    <div id="profileArea"></div>
+  </div>
+
 </div>
 
-<footer>योजना खोजक — सामान्य जानकारी के लिए। आधिकारिक पुष्टि संबंधित विभाग से करें। · <a href="#" onclick="alert('यह ऐप केवल जानकारी देने के लिए है। किसी भी योजना के लिए आवेदन करने से पहले संबंधित सरकारी विभाग या आधिकारिक वेबसाइट से पुष्टि अवश्य करें। यह कोई सरकारी ऐप नहीं है।'); return false;">डिस्क्लेमर</a> · <a href="https://wa.me/?text=मुझे%20योजना%20खोजक%20ऐप%20में%20यह%20सुझाव%20देना%20है:%20" target="_blank">सुझाव दें</a></footer>
+<footer style="margin-bottom:70px;">योजना खोजक — सामान्य जानकारी के लिए। आधिकारिक पुष्टि संबंधित विभाग से करें। · <a href="#" onclick="alert('यह ऐप केवल जानकारी देने के लिए है। किसी भी योजना के लिए आवेदन करने से पहले संबंधित सरकारी विभाग या आधिकारिक वेबसाइट से पुष्टि अवश्य करें। यह कोई सरकारी ऐप नहीं है।'); return false;">डिस्क्लेमर</a> · <a href="https://wa.me/?text=मुझे%20योजना%20खोजक%20ऐप%20में%20यह%20सुझाव%20देना%20है:%20" target="_blank">सुझाव दें</a></footer>
+
+<nav class="bottom-nav">
+  <div class="nav-item active" id="navHome" onclick="switchTab('home')">
+    <span class="nav-icon">🏠</span>होम
+  </div>
+  <div class="nav-item" id="navSearch" onclick="switchTab('search')">
+    <span class="nav-icon">🔍</span>खोजें
+  </div>
+  <div class="nav-item" id="navSaved" onclick="switchTab('saved')">
+    <span class="nav-icon">⭐</span>सेव की हुई
+  </div>
+  <div class="nav-item" id="navProfile" onclick="switchTab('profile')">
+    <span class="nav-icon">👤</span>प्रोफ़ाइल
+  </div>
+</nav>
 
 <script>
   // ---- डेटा: सरकारी योजनाओं की सूची ----
@@ -481,105 +682,60 @@
   }
 
   function switchTab(tab){
-    document.getElementById('tabSearch').classList.toggle('active', tab === 'search');
-    document.getElementById('tabSaved').classList.toggle('active', tab === 'saved');
+    document.getElementById('navHome').classList.toggle('active', tab === 'home');
+    document.getElementById('navSearch').classList.toggle('active', tab === 'search');
+    document.getElementById('navSaved').classList.toggle('active', tab === 'saved');
+    document.getElementById('navProfile').classList.toggle('active', tab === 'profile');
+    document.getElementById('homeSection').style.display = tab === 'home' ? 'block' : 'none';
     document.getElementById('searchSection').style.display = tab === 'search' ? 'block' : 'none';
     document.getElementById('savedSection').style.display = tab === 'saved' ? 'block' : 'none';
+    document.getElementById('profileSection').style.display = tab === 'profile' ? 'block' : 'none';
+    if(tab === 'home') renderHome();
     if(tab === 'saved') renderSaved();
+    if(tab === 'profile') renderProfile();
+    window.scrollTo(0,0);
   }
 
-  function renderSaved(){
-    const saved = getSaved();
-    const area = document.getElementById('savedArea');
-    if(saved.length === 0){
-      area.innerHTML = `<div class="empty-state"><div class="stamp">⭐</div><p>अभी तक कोई योजना सेव नहीं की। खोजकर "सेव करें" दबाएं।</p></div>`;
-      return;
-    }
-    let html = `<div class="results-head">${saved.length} सेव की हुई योजनाएं:</div>`;
-    saved.forEach(name => {
-      const s = schemes.find(sc => sc.name === name);
-      if(!s) return;
-      html += cardHTML(s);
-    });
-    area.innerHTML = html;
-  }
-
-  function officialLink(s){
-    const query = encodeURIComponent((s.enName || s.name) + " official website apply");
-    return `https://www.google.com/search?q=${query}`;
-  }
-
-  function cardHTML(s){
-    const saved = isSaved(s.name);
-    return `
-      <div class="scheme-card eligible">
-        <span class="badge">पात्र हो सकते हैं</span>
-        <h3>${s.name}</h3>
-        <p>${s.desc}</p>
-        <div class="tags">श्रेणी: ${s.categories.join(', ')}</div>
-        <div class="card-actions">
-          <button class="${saved ? 'saved' : ''}" onclick="toggleSave('${s.name}')">${saved ? '★ सेव की हुई' : '☆ सेव करें'}</button>
-          <button onclick="shareScheme('${s.name}', \`${s.desc}\`)">↗ शेयर करें</button>
-        </div>
-        <div class="card-actions">
-          <a href="${officialLink(s)}" target="_blank" rel="noopener" style="flex:1; text-decoration:none;">
-            <button style="width:100%; background:#1C2541; color:#fff; border-color:#1C2541;">🔗 आधिकारिक वेबसाइट खोलें</button>
-          </a>
-        </div>
+  // ---- होम स्क्रीन ----
+  function renderHome(){
+    const name = localStorage.getItem('userName');
+    const greeting = name ? `नमस्ते, ${name} 👋` : 'नमस्ते 👋';
+    const savedCount = getSaved().length;
+    document.getElementById('homeArea').innerHTML = `
+      <div class="home-banner">
+        <h2>${greeting}</h2>
+        <p>अपनी सही सरकारी योजना खोजें, मुफ़्त और आसान</p>
       </div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num">${schemes.length}</div><div class="lbl">कुल योजनाएं</div></div>
+        <div class="stat-box"><div class="num">${savedCount}</div><div class="lbl">सेव की हुई</div></div>
+        <div class="stat-box"><div class="num">7</div><div class="lbl">श्रेणियां</div></div>
+      </div>
+      <div class="home-action" onclick="switchTab('search')">🔍 नई योजना खोजें <span class="arrow">›</span></div>
+      <div class="home-action" onclick="switchTab('saved')">⭐ सेव की हुई योजनाएं देखें <span class="arrow">›</span></div>
+      <div class="home-action" onclick="switchTab('profile')">👤 प्रोफ़ाइल देखें / बनाएं <span class="arrow">›</span></div>
     `;
   }
 
-  function searchSchemes(){
-    const age = parseInt(document.getElementById('age').value) || null;
-    const income = parseInt(document.getElementById('income').value) || null;
-    const keyword = document.getElementById('keyword').value.trim().toLowerCase();
-    const resultsArea = document.getElementById('resultsArea');
-
-    if(!selectedCategory && !keyword){
-      resultsArea.innerHTML = `<div class="empty-state"><div class="stamp">⚠️</div><p>कृपया श्रेणी चुनें या योजना का नाम टाइप करें</p></div>`;
-      return;
-    }
-
-    const matches = schemes.filter(s => {
-      const catMatch = selectedCategory ? s.categories.includes(selectedCategory) : true;
-      const ageMatch = age === null ? true : (age >= s.minAge && age <= s.maxAge);
-      const incomeMatch = (income === null || s.maxIncome === null) ? true : (income <= s.maxIncome);
-      const keywordMatch = keyword ? (s.name.toLowerCase().includes(keyword) || (s.enName || '').toLowerCase().includes(keyword) || s.desc.toLowerCase().includes(keyword)) : true;
-      return catMatch && ageMatch && incomeMatch && keywordMatch;
-    });
-
-    if(matches.length === 0){
-      resultsArea.innerHTML = `<div class="empty-state"><div class="stamp">🔍</div><p>आपकी जानकारी से मेल खाती कोई योजना नहीं मिली। उम्र या आय बदलकर फिर से देखें।</p></div>`;
-      return;
-    }
-
-    let html = `<div class="results-head">${matches.length} योजना मिली — आपके लिए पात्र हो सकती हैं:</div>`;
-    matches.forEach(s => { html += cardHTML(s); });
-    resultsArea.innerHTML = html;
-  }
-
-  // ---- PWA इंस्टॉल प्रॉम्प्ट ----
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    document.getElementById('installBanner').style.display = 'flex';
-  });
-  function installApp(){
-    if(deferredPrompt){
-      deferredPrompt.prompt();
-      document.getElementById('installBanner').style.display = 'none';
-    }
-  }
-
-  // ---- Service worker रजिस्टर करें (ऑफलाइन सपोर्ट के लिए) ----
-  if('serviceWorker' in navigator){
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js').catch(() => {});
-    });
-  }
-</script>
-
-</body>
-</html>
+  // ---- प्रोफ़ाइल स्क्रीन ----
+  function renderProfile(){
+    const name = localStorage.getItem('userName') || '';
+    const initial = name ? name.trim().charAt(0).toUpperCase() : '?';
+    document.getElementById('profileArea').innerHTML = `
+      <div class="profile-card">
+        <div class="profile-avatar">${initial}</div>
+        <h3>${name || 'अपनी ID बनाएं'}</h3>
+        <p>${name ? 'आपकी प्रोफ़ाइल इस फोन में सेव है' : 'अपना नाम डालकर प्रोफ़ाइल बनाएं'}</p>
+      </div>
+      <div class="filter-card">
+        <h2>अपनी जानकारी</h2>
+        <div class="field">
+          <label for="profileName">आपका नाम</label>
+          <input type="text" id="profileName" placeholder="जैसे: राहुल कुमार" value="${name}">
+        </div>
+        <button class="btn-search" onclick="saveProfile()">सेव करें</button>
+      </div>
+      <div class="filter-card">
+        <h2>ऐप की जानकारी</h2>
+        <div class="perk-list" style="margin-bottom:0;">
+          <div class="p
