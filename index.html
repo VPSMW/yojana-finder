@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1C2541">
 <title>योजना खोजक — आपकी सरकारी योजना ढूंढें</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -169,6 +173,78 @@
     font-size:12px;
     color:#999;
   }
+  .card-actions{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+  }
+  .card-actions button{
+    flex:1;
+    padding:8px;
+    font-size:12.5px;
+    font-weight:600;
+    border-radius:7px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:#555;
+    cursor:pointer;
+    font-family:'Hind', sans-serif;
+  }
+  .card-actions button.saved{
+    background:#FFF3EC;
+    border-color:var(--saffron);
+    color:var(--saffron);
+  }
+  .install-banner{
+    background:#FFF3EC;
+    border:1.5px solid var(--saffron);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:18px;
+    font-size:13px;
+    color:#7a4322;
+    display:none;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .install-banner button{
+    background:var(--saffron);
+    color:#fff;
+    border:none;
+    padding:8px 14px;
+    border-radius:7px;
+    font-size:13px;
+    font-weight:600;
+    white-space:nowrap;
+    cursor:pointer;
+  }
+  .tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .tab{
+    flex:1;
+    text-align:center;
+    padding:10px;
+    border-radius:9px;
+    font-size:13.5px;
+    font-weight:600;
+    background:#fff;
+    border:1.5px solid var(--line);
+    color:#777;
+    cursor:pointer;
+  }
+  .tab.active{
+    background:var(--indigo);
+    color:#fff;
+    border-color:var(--indigo);
+  }
+  footer a{
+    color:#888;
+    text-decoration:underline;
+  }
   .empty-state{
     text-align:center;
     padding:40px 20px;
@@ -196,6 +272,17 @@
 
 <div class="container">
 
+  <div class="install-banner" id="installBanner">
+    <span>📱 इसे होम स्क्रीन पर इंस्टॉल करें</span>
+    <button onclick="installApp()">इंस्टॉल करें</button>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" id="tabSearch" onclick="switchTab('search')">योजना खोजें</div>
+    <div class="tab" id="tabSaved" onclick="switchTab('saved')">सेव की हुई</div>
+  </div>
+
+  <div id="searchSection">
   <div class="filter-card">
     <h2>अपना विवरण दें</h2>
 
@@ -231,10 +318,15 @@
       <p>ऊपर अपनी जानकारी भरकर "योजना खोजें" दबाएं</p>
     </div>
   </div>
+  </div>
+
+  <div id="savedSection" style="display:none;">
+    <div id="savedArea"></div>
+  </div>
 
 </div>
 
-<footer>योजना खोजक — सामान्य जानकारी के लिए। आधिकारिक पुष्टि संबंधित विभाग से करें।</footer>
+<footer>योजना खोजक — सामान्य जानकारी के लिए। आधिकारिक पुष्टि संबंधित विभाग से करें। · <a href="#" onclick="alert('यह ऐप केवल जानकारी देने के लिए है। किसी भी योजना के लिए आवेदन करने से पहले संबंधित सरकारी विभाग या आधिकारिक वेबसाइट से पुष्टि अवश्य करें। यह कोई सरकारी ऐप नहीं है।'); return false;">डिस्क्लेमर</a></footer>
 
 <script>
   // ---- डेटा: सरकारी योजनाओं की सूची ----
@@ -343,6 +435,73 @@
     });
   });
 
+  // ---- सेव की हुई योजनाएं (localStorage में) ----
+  function getSaved(){
+    return JSON.parse(localStorage.getItem('savedSchemes') || '[]');
+  }
+  function isSaved(name){
+    return getSaved().includes(name);
+  }
+  function toggleSave(name){
+    let saved = getSaved();
+    if(saved.includes(name)){
+      saved = saved.filter(n => n !== name);
+    } else {
+      saved.push(name);
+    }
+    localStorage.setItem('savedSchemes', JSON.stringify(saved));
+    searchSchemes();
+    renderSaved();
+  }
+  function shareScheme(name, desc){
+    const text = `${name}\n${desc}\n\n— योजना खोजक ऐप से`;
+    if(navigator.share){
+      navigator.share({title: name, text: text});
+    } else {
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+    }
+  }
+
+  function switchTab(tab){
+    document.getElementById('tabSearch').classList.toggle('active', tab === 'search');
+    document.getElementById('tabSaved').classList.toggle('active', tab === 'saved');
+    document.getElementById('searchSection').style.display = tab === 'search' ? 'block' : 'none';
+    document.getElementById('savedSection').style.display = tab === 'saved' ? 'block' : 'none';
+    if(tab === 'saved') renderSaved();
+  }
+
+  function renderSaved(){
+    const saved = getSaved();
+    const area = document.getElementById('savedArea');
+    if(saved.length === 0){
+      area.innerHTML = `<div class="empty-state"><div class="stamp">⭐</div><p>अभी तक कोई योजना सेव नहीं की। खोजकर "सेव करें" दबाएं।</p></div>`;
+      return;
+    }
+    let html = `<div class="results-head">${saved.length} सेव की हुई योजनाएं:</div>`;
+    saved.forEach(name => {
+      const s = schemes.find(sc => sc.name === name);
+      if(!s) return;
+      html += cardHTML(s);
+    });
+    area.innerHTML = html;
+  }
+
+  function cardHTML(s){
+    const saved = isSaved(s.name);
+    return `
+      <div class="scheme-card eligible">
+        <span class="badge">पात्र हो सकते हैं</span>
+        <h3>${s.name}</h3>
+        <p>${s.desc}</p>
+        <div class="tags">श्रेणी: ${s.categories.join(', ')}</div>
+        <div class="card-actions">
+          <button class="${saved ? 'saved' : ''}" onclick="toggleSave('${s.name}')">${saved ? '★ सेव की हुई' : '☆ सेव करें'}</button>
+          <button onclick="shareScheme('${s.name}', \`${s.desc}\`)">↗ शेयर करें</button>
+        </div>
+      </div>
+    `;
+  }
+
   function searchSchemes(){
     const age = parseInt(document.getElementById('age').value) || null;
     const income = parseInt(document.getElementById('income').value) || null;
@@ -366,19 +525,32 @@
     }
 
     let html = `<div class="results-head">${matches.length} योजना मिली — आपके लिए पात्र हो सकती हैं:</div>`;
-    matches.forEach(s => {
-      html += `
-        <div class="scheme-card eligible">
-          <span class="badge">पात्र हो सकते हैं</span>
-          <h3>${s.name}</h3>
-          <p>${s.desc}</p>
-          <div class="tags">श्रेणी: ${s.categories.join(', ')}</div>
-        </div>
-      `;
-    });
+    matches.forEach(s => { html += cardHTML(s); });
     resultsArea.innerHTML = html;
+  }
+
+  // ---- PWA इंस्टॉल प्रॉम्प्ट ----
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBanner').style.display = 'flex';
+  });
+  function installApp(){
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      document.getElementById('installBanner').style.display = 'none';
+    }
+  }
+
+  // ---- Service worker रजिस्टर करें (ऑफलाइन सपोर्ट के लिए) ----
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch(() => {});
+    });
   }
 </script>
 
 </body>
 </html>
+
