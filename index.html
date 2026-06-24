@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>योजना खोजक — आपकी सरकारी योजना ढूंढें</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF7EE;
+    --ink:#22252B;
+    --indigo:#1C2541;
+    --saffron:#E8743B;
+    --green:#1B7A43;
+    --line:#E4DCC8;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Hind', sans-serif;
+    min-height:100vh;
+  }
+  .tricolor-strip{
+    height:5px;
+    background:linear-gradient(90deg, var(--saffron) 0 33%, #fff 33% 66%, var(--green) 66% 100%);
+  }
+  header{
+    padding:28px 20px 22px;
+    background:var(--indigo);
+    color:#fff;
+    text-align:center;
+  }
+  header h1{
+    font-family:'Baloo 2', sans-serif;
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:0.5px;
+  }
+  header p{
+    margin-top:6px;
+    font-size:14px;
+    color:#C9CFE0;
+  }
+  .container{
+    max-width:480px;
+    margin:0 auto;
+    padding:18px 16px 60px;
+  }
+  .filter-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(28,37,65,0.06);
+  }
+  .filter-card h2{
+    font-family:'Baloo 2', sans-serif;
+    font-size:18px;
+    color:var(--indigo);
+    margin-bottom:14px;
+  }
+  .field{
+    margin-bottom:14px;
+  }
+  .field label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:#555;
+    margin-bottom:6px;
+  }
+  .field input, .field select{
+    width:100%;
+    padding:10px 12px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    font-size:15px;
+    font-family:'Hind', sans-serif;
+    background:#fff;
+    color:var(--ink);
+  }
+  .field input:focus, .field select:focus{
+    outline:none;
+    border-color:var(--saffron);
+  }
+  .chip-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    padding:7px 14px;
+    border:1.5px solid var(--line);
+    border-radius:20px;
+    font-size:13px;
+    cursor:pointer;
+    background:#fff;
+    color:#555;
+    transition:0.15s;
+  }
+  .chip.active{
+    background:var(--saffron);
+    border-color:var(--saffron);
+    color:#fff;
+    font-weight:600;
+  }
+  .btn-search{
+    width:100%;
+    padding:13px;
+    background:var(--indigo);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    font-family:'Hind', sans-serif;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  .btn-search:active{
+    opacity:0.85;
+  }
+  .results-head{
+    font-size:14px;
+    color:#777;
+    margin-bottom:12px;
+  }
+  .scheme-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:5px solid var(--saffron);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:12px;
+    position:relative;
+  }
+  .scheme-card.eligible{
+    border-left-color:var(--green);
+  }
+  .badge{
+    position:absolute;
+    top:14px;
+    right:14px;
+    font-size:11px;
+    font-weight:700;
+    padding:4px 10px;
+    border-radius:20px;
+    background:#E9F5EC;
+    color:var(--green);
+  }
+  .scheme-card h3{
+    font-family:'Baloo 2', sans-serif;
+    font-size:17px;
+    color:var(--indigo);
+    margin-bottom:6px;
+    padding-right:70px;
+  }
+  .scheme-card p{
+    font-size:13.5px;
+    color:#555;
+    line-height:1.5;
+    margin-bottom:8px;
+  }
+  .scheme-card .tags{
+    font-size:12px;
+    color:#999;
+  }
+  .empty-state{
+    text-align:center;
+    padding:40px 20px;
+    color:#999;
+  }
+  .empty-state .stamp{
+    font-size:40px;
+    margin-bottom:10px;
+  }
+  footer{
+    text-align:center;
+    font-size:12px;
+    color:#aaa;
+    padding:20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🇮🇳 योजना खोजक</h1>
+  <p>अपनी जानकारी भरें, हम बताएंगे — कौन सी योजना आपके लिए है</p>
+</header>
+<div class="tricolor-strip"></div>
+
+<div class="container">
+
+  <div class="filter-card">
+    <h2>अपना विवरण दें</h2>
+
+    <div class="field">
+      <label for="age">आपकी उम्र</label>
+      <input type="number" id="age" placeholder="जैसे: 28" min="0" max="100">
+    </div>
+
+    <div class="field">
+      <label for="income">वार्षिक आय (रुपयों में)</label>
+      <input type="number" id="income" placeholder="जैसे: 150000">
+    </div>
+
+    <div class="field">
+      <label>आप कौन हैं? (एक चुनें)</label>
+      <div class="chip-row" id="categoryChips">
+        <div class="chip" data-val="किसान">किसान</div>
+        <div class="chip" data-val="महिला">महिला</div>
+        <div class="chip" data-val="छात्र">छात्र</div>
+        <div class="chip" data-val="वृद्ध">वृद्ध (बुजुर्ग)</div>
+        <div class="chip" data-val="उद्यमी">उद्यमी / व्यापारी</div>
+        <div class="chip" data-val="मजदूर">मजदूर / श्रमिक</div>
+        <div class="chip" data-val="सामान्य">कोई और / सामान्य</div>
+      </div>
+    </div>
+
+    <button class="btn-search" onclick="searchSchemes()">योजना खोजें</button>
+  </div>
+
+  <div id="resultsArea">
+    <div class="empty-state">
+      <div class="stamp">📋</div>
+      <p>ऊपर अपनी जानकारी भरकर "योजना खोजें" दबाएं</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>योजना खोजक — सामान्य जानकारी के लिए। आधिकारिक पुष्टि संबंधित विभाग से करें।</footer>
+
+<script>
+  // ---- डेटा: सरकारी योजनाओं की सूची ----
+  // हर योजना में: नाम, विवरण, श्रेणी (कौन apply कर सकता है), आय सीमा, उम्र सीमा
+  const schemes = [
+    {
+      name: "PM किसान सम्मान निधि",
+      desc: "छोटे और सीमांत किसानों को हर साल ₹6,000 की सीधी आर्थिक सहायता, तीन किस्तों में।",
+      categories: ["किसान"],
+      minAge: 18, maxAge: 100,
+      maxIncome: null
+    },
+    {
+      name: "आयुष्मान भारत (PM-JAY)",
+      desc: "गरीब और कमजोर परिवारों को ₹5 लाख तक का मुफ्त इलाज, सरकारी और सूचीबद्ध निजी अस्पतालों में।",
+      categories: ["सामान्य", "मजदूर", "किसान", "वृद्ध"],
+      minAge: 0, maxAge: 100,
+      maxIncome: 250000
+    },
+    {
+      name: "प्रधानमंत्री आवास योजना",
+      desc: "पक्का घर न होने वालों को घर बनाने के लिए सब्सिडी और सस्ता लोन।",
+      categories: ["सामान्य", "मजदूर", "किसान"],
+      minAge: 18, maxAge: 100,
+      maxIncome: 1800000
+    },
+    {
+      name: "सुकन्या समृद्धि योजना",
+      desc: "10 साल से कम उम्र की बेटी के नाम बचत खाता, उच्च ब्याज दर के साथ — पढ़ाई और शादी के लिए।",
+      categories: ["महिला"],
+      minAge: 0, maxAge: 10,
+      maxIncome: null
+    },
+    {
+      name: "राष्ट्रीय वृद्धावस्था पेंशन योजना (NSAP)",
+      desc: "गरीबी रेखा से नीचे रहने वाले 60+ उम्र के बुजुर्गों को मासिक पेंशन।",
+      categories: ["वृद्ध"],
+      minAge: 60, maxAge: 150,
+      maxIncome: 300000
+    },
+    {
+      name: "प्रधानमंत्री उज्ज्वला योजना",
+      desc: "गरीब परिवारों की महिलाओं को मुफ्त LPG गैस कनेक्शन।",
+      categories: ["महिला", "सामान्य"],
+      minAge: 18, maxAge: 100,
+      maxIncome: 200000
+    },
+    {
+      name: "अटल पेंशन योजना",
+      desc: "असंगठित क्षेत्र के मजदूरों के लिए 60 साल की उम्र के बाद मासिक पेंशन की योजना।",
+      categories: ["मजदूर", "सामान्य"],
+      minAge: 18, maxAge: 40,
+      maxIncome: null
+    },
+    {
+      name: "PM मुद्रा योजना",
+      desc: "छोटे व्यापारियों और स्टार्टअप के लिए बिना गारंटी ₹10 लाख तक का लोन।",
+      categories: ["उद्यमी"],
+      minAge: 18, maxAge: 100,
+      maxIncome: null
+    },
+    {
+      name: "स्टैंड-अप इंडिया योजना",
+      desc: "महिला, SC/ST उद्यमियों के लिए बैंक से ₹10 लाख से ₹1 करोड़ तक का लोन।",
+      categories: ["उद्यमी", "महिला"],
+      minAge: 18, maxAge: 100,
+      maxIncome: null
+    },
+    {
+      name: "राष्ट्रीय छात्रवृत्ति पोर्टल (स्कॉलरशिप)",
+      desc: "कमजोर आर्थिक स्थिति वाले छात्रों के लिए स्कूल और कॉलेज स्कॉलरशिप।",
+      categories: ["छात्र"],
+      minAge: 5, maxAge: 30,
+      maxIncome: 800000
+    },
+    {
+      name: "बेटी बचाओ बेटी पढ़ाओ",
+      desc: "बेटियों की शिक्षा और सुरक्षा को बढ़ावा देने वाली जागरूकता और सहायता योजना।",
+      categories: ["महिला"],
+      minAge: 0, maxAge: 100,
+      maxIncome: null
+    },
+    {
+      name: "प्रधानमंत्री श्रम योगी मानधन",
+      desc: "असंगठित क्षेत्र के मजदूरों के लिए 60 साल बाद ₹3,000 मासिक पेंशन।",
+      categories: ["मजदूर"],
+      minAge: 18, maxAge: 40,
+      maxIncome: 1500000
+    },
+    {
+      name: "कौशल विकास योजना (PMKVY)",
+      desc: "युवाओं को मुफ्त स्किल ट्रेनिंग और सर्टिफिकेट, नौकरी पाने में मदद के लिए।",
+      categories: ["छात्र", "सामान्य", "मजदूर"],
+      minAge: 15, maxAge: 45,
+      maxIncome: null
+    }
+  ];
+
+  let selectedCategory = null;
+
+  document.querySelectorAll('#categoryChips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#categoryChips .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      selectedCategory = chip.dataset.val;
+    });
+  });
+
+  function searchSchemes(){
+    const age = parseInt(document.getElementById('age').value) || null;
+    const income = parseInt(document.getElementById('income').value) || null;
+    const resultsArea = document.getElementById('resultsArea');
+
+    if(!selectedCategory){
+      resultsArea.innerHTML = `<div class="empty-state"><div class="stamp">⚠️</div><p>कृपया ऊपर अपनी श्रेणी चुनें</p></div>`;
+      return;
+    }
+
+    const matches = schemes.filter(s => {
+      const catMatch = s.categories.includes(selectedCategory);
+      const ageMatch = age === null ? true : (age >= s.minAge && age <= s.maxAge);
+      const incomeMatch = (income === null || s.maxIncome === null) ? true : (income <= s.maxIncome);
+      return catMatch && ageMatch && incomeMatch;
+    });
+
+    if(matches.length === 0){
+      resultsArea.innerHTML = `<div class="empty-state"><div class="stamp">🔍</div><p>आपकी जानकारी से मेल खाती कोई योजना नहीं मिली। उम्र या आय बदलकर फिर से देखें।</p></div>`;
+      return;
+    }
+
+    let html = `<div class="results-head">${matches.length} योजना मिली — आपके लिए पात्र हो सकती हैं:</div>`;
+    matches.forEach(s => {
+      html += `
+        <div class="scheme-card eligible">
+          <span class="badge">पात्र हो सकते हैं</span>
+          <h3>${s.name}</h3>
+          <p>${s.desc}</p>
+          <div class="tags">श्रेणी: ${s.categories.join(', ')}</div>
+        </div>
+      `;
+    });
+    resultsArea.innerHTML = html;
+  }
+</script>
+
+</body>
+</html>
