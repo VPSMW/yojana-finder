@@ -287,6 +287,11 @@
     <h2>अपना विवरण दें</h2>
 
     <div class="field">
+      <label for="keyword">योजना का नाम खोजें (वैकल्पिक)</label>
+      <input type="text" id="keyword" placeholder="जैसे: किसान, छात्रवृत्ति, घर">
+    </div>
+
+    <div class="field">
       <label for="age">आपकी उम्र</label>
       <input type="number" id="age" placeholder="जैसे: 28" min="0" max="100">
     </div>
@@ -326,7 +331,7 @@
 
 </div>
 
-<footer>योजना खोजक — सामान्य जानकारी के लिए। आधिकारिक पुष्टि संबंधित विभाग से करें। · <a href="#" onclick="alert('यह ऐप केवल जानकारी देने के लिए है। किसी भी योजना के लिए आवेदन करने से पहले संबंधित सरकारी विभाग या आधिकारिक वेबसाइट से पुष्टि अवश्य करें। यह कोई सरकारी ऐप नहीं है।'); return false;">डिस्क्लेमर</a></footer>
+<footer>योजना खोजक — सामान्य जानकारी के लिए। आधिकारिक पुष्टि संबंधित विभाग से करें। · <a href="#" onclick="alert('यह ऐप केवल जानकारी देने के लिए है। किसी भी योजना के लिए आवेदन करने से पहले संबंधित सरकारी विभाग या आधिकारिक वेबसाइट से पुष्टि अवश्य करें। यह कोई सरकारी ऐप नहीं है।'); return false;">डिस्क्लेमर</a> · <a href="https://wa.me/?text=मुझे%20योजना%20खोजक%20ऐप%20में%20यह%20सुझाव%20देना%20है:%20" target="_blank">सुझाव दें</a></footer>
 
 <script>
   // ---- डेटा: सरकारी योजनाओं की सूची ----
@@ -334,6 +339,7 @@
   const schemes = [
     {
       name: "PM किसान सम्मान निधि",
+      enName: "PM Kisan Samman Nidhi",
       desc: "छोटे और सीमांत किसानों को हर साल ₹6,000 की सीधी आर्थिक सहायता, तीन किस्तों में।",
       categories: ["किसान"],
       minAge: 18, maxAge: 100,
@@ -341,6 +347,7 @@
     },
     {
       name: "आयुष्मान भारत (PM-JAY)",
+      enName: "Ayushman Bharat PMJAY",
       desc: "गरीब और कमजोर परिवारों को ₹5 लाख तक का मुफ्त इलाज, सरकारी और सूचीबद्ध निजी अस्पतालों में।",
       categories: ["सामान्य", "मजदूर", "किसान", "वृद्ध"],
       minAge: 0, maxAge: 100,
@@ -348,6 +355,7 @@
     },
     {
       name: "प्रधानमंत्री आवास योजना",
+      enName: "PM Awas Yojana",
       desc: "पक्का घर न होने वालों को घर बनाने के लिए सब्सिडी और सस्ता लोन।",
       categories: ["सामान्य", "मजदूर", "किसान"],
       minAge: 18, maxAge: 100,
@@ -355,6 +363,7 @@
     },
     {
       name: "सुकन्या समृद्धि योजना",
+      enName: "Sukanya Samriddhi Yojana",
       desc: "10 साल से कम उम्र की बेटी के नाम बचत खाता, उच्च ब्याज दर के साथ — पढ़ाई और शादी के लिए।",
       categories: ["महिला"],
       minAge: 0, maxAge: 10,
@@ -362,6 +371,7 @@
     },
     {
       name: "राष्ट्रीय वृद्धावस्था पेंशन योजना (NSAP)",
+      enName: "National Old Age Pension NSAP",
       desc: "गरीबी रेखा से नीचे रहने वाले 60+ उम्र के बुजुर्गों को मासिक पेंशन।",
       categories: ["वृद्ध"],
       minAge: 60, maxAge: 150,
@@ -369,6 +379,7 @@
     },
     {
       name: "प्रधानमंत्री उज्ज्वला योजना",
+      enName: "PM Ujjwala Yojana",
       desc: "गरीब परिवारों की महिलाओं को मुफ्त LPG गैस कनेक्शन।",
       categories: ["महिला", "सामान्य"],
       minAge: 18, maxAge: 100,
@@ -376,6 +387,7 @@
     },
     {
       name: "अटल पेंशन योजना",
+      enName: "Atal Pension Yojana",
       desc: "असंगठित क्षेत्र के मजदूरों के लिए 60 साल की उम्र के बाद मासिक पेंशन की योजना।",
       categories: ["मजदूर", "सामान्य"],
       minAge: 18, maxAge: 40,
@@ -383,6 +395,7 @@
     },
     {
       name: "PM मुद्रा योजना",
+      enName: "PM Mudra Yojana",
       desc: "छोटे व्यापारियों और स्टार्टअप के लिए बिना गारंटी ₹10 लाख तक का लोन।",
       categories: ["उद्यमी"],
       minAge: 18, maxAge: 100,
@@ -390,6 +403,7 @@
     },
     {
       name: "स्टैंड-अप इंडिया योजना",
+      enName: "Stand Up India Scheme",
       desc: "महिला, SC/ST उद्यमियों के लिए बैंक से ₹10 लाख से ₹1 करोड़ तक का लोन।",
       categories: ["उद्यमी", "महिला"],
       minAge: 18, maxAge: 100,
@@ -397,6 +411,7 @@
     },
     {
       name: "राष्ट्रीय छात्रवृत्ति पोर्टल (स्कॉलरशिप)",
+      enName: "National Scholarship Portal",
       desc: "कमजोर आर्थिक स्थिति वाले छात्रों के लिए स्कूल और कॉलेज स्कॉलरशिप।",
       categories: ["छात्र"],
       minAge: 5, maxAge: 30,
@@ -404,6 +419,7 @@
     },
     {
       name: "बेटी बचाओ बेटी पढ़ाओ",
+      enName: "Beti Bachao Beti Padhao",
       desc: "बेटियों की शिक्षा और सुरक्षा को बढ़ावा देने वाली जागरूकता और सहायता योजना।",
       categories: ["महिला"],
       minAge: 0, maxAge: 100,
@@ -411,6 +427,7 @@
     },
     {
       name: "प्रधानमंत्री श्रम योगी मानधन",
+      enName: "PM Shram Yogi Maandhan",
       desc: "असंगठित क्षेत्र के मजदूरों के लिए 60 साल बाद ₹3,000 मासिक पेंशन।",
       categories: ["मजदूर"],
       minAge: 18, maxAge: 40,
@@ -418,6 +435,7 @@
     },
     {
       name: "कौशल विकास योजना (PMKVY)",
+      enName: "Pradhan Mantri Kaushal Vikas Yojana PMKVY",
       desc: "युवाओं को मुफ्त स्किल ट्रेनिंग और सर्टिफिकेट, नौकरी पाने में मदद के लिए।",
       categories: ["छात्र", "सामान्य", "मजदूर"],
       minAge: 15, maxAge: 45,
@@ -486,6 +504,11 @@
     area.innerHTML = html;
   }
 
+  function officialLink(s){
+    const query = encodeURIComponent((s.enName || s.name) + " official website apply");
+    return `https://www.google.com/search?q=${query}`;
+  }
+
   function cardHTML(s){
     const saved = isSaved(s.name);
     return `
@@ -498,6 +521,11 @@
           <button class="${saved ? 'saved' : ''}" onclick="toggleSave('${s.name}')">${saved ? '★ सेव की हुई' : '☆ सेव करें'}</button>
           <button onclick="shareScheme('${s.name}', \`${s.desc}\`)">↗ शेयर करें</button>
         </div>
+        <div class="card-actions">
+          <a href="${officialLink(s)}" target="_blank" rel="noopener" style="flex:1; text-decoration:none;">
+            <button style="width:100%; background:#1C2541; color:#fff; border-color:#1C2541;">🔗 आधिकारिक वेबसाइट खोलें</button>
+          </a>
+        </div>
       </div>
     `;
   }
@@ -505,18 +533,20 @@
   function searchSchemes(){
     const age = parseInt(document.getElementById('age').value) || null;
     const income = parseInt(document.getElementById('income').value) || null;
+    const keyword = document.getElementById('keyword').value.trim().toLowerCase();
     const resultsArea = document.getElementById('resultsArea');
 
-    if(!selectedCategory){
-      resultsArea.innerHTML = `<div class="empty-state"><div class="stamp">⚠️</div><p>कृपया ऊपर अपनी श्रेणी चुनें</p></div>`;
+    if(!selectedCategory && !keyword){
+      resultsArea.innerHTML = `<div class="empty-state"><div class="stamp">⚠️</div><p>कृपया श्रेणी चुनें या योजना का नाम टाइप करें</p></div>`;
       return;
     }
 
     const matches = schemes.filter(s => {
-      const catMatch = s.categories.includes(selectedCategory);
+      const catMatch = selectedCategory ? s.categories.includes(selectedCategory) : true;
       const ageMatch = age === null ? true : (age >= s.minAge && age <= s.maxAge);
       const incomeMatch = (income === null || s.maxIncome === null) ? true : (income <= s.maxIncome);
-      return catMatch && ageMatch && incomeMatch;
+      const keywordMatch = keyword ? (s.name.toLowerCase().includes(keyword) || (s.enName || '').toLowerCase().includes(keyword) || s.desc.toLowerCase().includes(keyword)) : true;
+      return catMatch && ageMatch && incomeMatch && keywordMatch;
     });
 
     if(matches.length === 0){
@@ -553,4 +583,3 @@
 
 </body>
 </html>
-
